@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .form-container, .posts-container {
+            margin: 20px 0;
+        }
+
+        .form-container input, .form-container textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .post-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .post-card button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .post-card .update-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .post-card .update-btn:hover {
+            background-color: #218838;
+        }
+
+        .post-card .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .post-card .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+<h1>Blog Application</h1>
+
+<!-- Form to Create/Update a Post -->
+<div class="form-container">
+    <h2>Create / Update Post</h2>
+    <form th:action="@{/createPost}" method="post">
+        <input type="hidden" th:name="id" th:value="${post.id}" />
+        <input type="text" name="title" placeholder="Post Title" th:value="${post.title}" required />
+        <textarea name="description" placeholder="Post Description" rows="5" th:text="${post.description}" required></textarea>
+        <button type="submit">Save Post</button>
+    </form>
+</div>
+
+<!-- List All Posts -->
+<div class="posts-container">
+    <h2>All Posts</h2>
+    <div th:each="post : ${posts}" class="post-card">
+        <h3 th:text="${post.title}"></h3>
+        <p th:text="${post.description}"></p>
+        <form th:action="@{/updatePost/{id}(id=${post.id})}" method="get" style="display: inline;">
+            <button class="update-btn">Update</button>
+        </form>
+        <form th:action="@{/deletePost/{id}(id=${post.id})}" method="post" style="display: inline;">
+            <button class="delete-btn" onclick="return confirm('Are you sure?')">Delete</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
