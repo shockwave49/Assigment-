@@ -1,5 +1,6 @@
 package com.blog.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.catalina.connector.Response;
@@ -53,20 +54,31 @@ public class UserController {
 		this.deleteUser(uid);
 		return ResponseEntity.ok(Map.of("message ","user deleted sucessfully "));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@GetMapping("/")
+	public ResponseEntity<List<UserDto>> getAllUsers(){
+		return ResponseEntity.ok(this.userService.getAllUsers());
+
+	}
+
+	//get user by id
+
+	@GetMapping("/{userId}")
+	public ResponseEntity<UserDto> getSingleUsers(@PathVariable Integer userId){
+		return ResponseEntity.ok(this.userService.getUserById(userId));
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
